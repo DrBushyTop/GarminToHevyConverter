@@ -12,7 +12,8 @@ go run . <path-to-json-file>
 e.g. 
 go run . ./data.json
 
-#Optionally you can specify the output file name as a second argument. By default it will be named "Converted_Garmin_Workouts.csv"
+# Optionally you can specify the output file name as a second argument. 
+# By default it will be named "Converted_Garmin_Workouts.csv"
 go run . <path-to-json-file> <name-of-csv-file-without-extension>
 e.g.
 go run . ./data.json myImportFile

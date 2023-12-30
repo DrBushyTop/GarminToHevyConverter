@@ -35,6 +35,7 @@ go run . ./data.json myImportFile
 
 - The tool has been tested once, and probably won't be updated unless I need to use it again.
 - Only English language is supported for the Garmin exercise names.
+- Only KG is supported. This would be an easy fix though.
 - The tool will skip any workouts that are not strength workouts.
 - The tool will skip any warmup or rest steps from the Garmin data. Any data without rep values will be set as 1 rep.
 - Exercise names picked from Garmin data will prioritize the name with the highest "probability" value. It seems that any manually set exercises have this set to 100 and will thus be picked.

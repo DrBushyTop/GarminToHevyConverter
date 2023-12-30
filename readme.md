@@ -38,5 +38,6 @@ go run . ./data.json myImportFile
 - The tool will skip any workouts that are not strength workouts.
 - The tool will skip any warmup or rest steps from the Garmin data. Any data without rep values will be set as 1 rep.
 - Exercise names picked from Garmin data will prioritize the name with the highest "probability" value. It seems that any manually set exercises have this set to 100 and will thus be picked.
+- **Only a subset of Garmin Excercises are mapped at the moment.** I only mapped the exercises I've done in the last couple of years. PRs are welcome for these.
 - Due to Garmin's limited selection of exercises, I had to use some placeholders for my own workouts. Yours might not match. To change these, edit the values in the conversions.go customExercises map.
 - The tool tries to avoid creating custom exercises in Hevy, but I ended up with some from my custom setup.

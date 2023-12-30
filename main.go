@@ -81,7 +81,7 @@ func processGarminData(data []GarminData) [][]string {
 		setOrder := 0
 
 		for _, set := range activity.FullExerciseSets {
-			if set.SetType != "ACTIVE" || set.Category == "WARM_UP" {
+			if set.SetType != "ACTIVE" || set.Category == "WARM_UP" || set.RepetitionCount == 0 || (set.Weight == 0 && set.RepetitionCount == 1) {
 				continue
 			}
 

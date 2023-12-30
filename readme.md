@@ -3,6 +3,10 @@
 This is a simple tool to convert Garmin Strength workout data in JSON format to CSV files that can be imported into [Hevy](https://www.hevyapp.com/).
 The actual format is the CSV export format from the [Strong app](https://www.strong.app/) (at the time of writing, the only importable data type in Hevy).
 
+## Prerequisites
+- Go 1.21 or later
+- Git to clone the repo
+
 ## Usage
 
 1. Get the JSON data from Garmin. I used this [Chrome extension](https://chromewebstore.google.com/detail/garmin-workout-downloader/hpimimpdkghmejbcldfccdbaebjifnkk).

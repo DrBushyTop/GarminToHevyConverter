@@ -12,6 +12,10 @@ The actual format is the CSV export format from the [Strong app](https://www.str
 1. Get the JSON data from Garmin. I used this [Chrome extension](https://chromewebstore.google.com/detail/garmin-workout-downloader/hpimimpdkghmejbcldfccdbaebjifnkk).
 2. Run the tool:
 ```sh 
+# From an executable the releases page
+./GarminToHevy-macos-arm64 <path-to-json-file>
+
+# Directly from the repo
 go run . <path-to-json-file>
 e.g. 
 go run . ./data.json

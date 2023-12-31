@@ -42,3 +42,14 @@ go run . ./data.json myImportFile
 - **Only a subset of Garmin Excercises are mapped at the moment.** I only mapped the exercises I've done in the last couple of years. PRs are welcome for these.
 - Due to Garmin's limited selection of exercises, I had to use some placeholders for my own workouts. Yours might not match. To change these, edit the values in the conversions.go customExercises map.
 - The tool tries to avoid creating custom exercises in Hevy, but I ended up with some from my custom setup.
+
+## Known Issues
+
+- Currently the following exercises create custom entries in Hevy with identical names to the default ones. Fixing this when I have an idea why it's happening.
+  ```
+  Lying Neck Extension (Weighted)
+  Seated Cable Row - Bar Wide Grip
+  Seated Cable Row - V Grip (Cable)
+  Single Arm Lateral Raise (Cable)
+  Walking Lunge (Dumbbell)
+  ```

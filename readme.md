@@ -13,7 +13,8 @@ The actual format is the CSV export format from the [Strong app](https://www.str
 ## Usage
 
 1. Get the JSON data from Garmin. I used this [Chrome extension](https://chromewebstore.google.com/detail/garmin-workout-downloader/hpimimpdkghmejbcldfccdbaebjifnkk).
-2. Run the tool:
+2. Optionally create a file named "customExerciseNames.json" in the same directory as the tool. This file can be used to map Garmin exercise names to Hevy exercise names. See [customExerciseNames.json](./customExerciseNames.json) for an example.
+3. Run the tool:
 ```sh 
 # From an executable the releases page
 ./GarminToHevy-macos-arm64 <path-to-json-file>
@@ -29,7 +30,7 @@ go run . <path-to-json-file> <name-of-csv-file-without-extension>
 e.g.
 go run . ./data.json myImportFile
 ```
-3. Use Hevy's import feature to import the CSV file.
+4. Use Hevy's import feature to import the CSV file.
 
 ## Notes
 

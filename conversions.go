@@ -42,8 +42,6 @@ var customExerciseNames = map[string]string{
 
 // exerciseNames maps the Garmin exercise name to the Hevy exercise name.
 // Note that this map is not complete.
-// exerciseNames maps the Garmin exercise name to the Hevy exercise name.
-// Note that this map is not complete.
 var exerciseNames = map[string]string{
 	"ALTERNATING_DUMBBELL_ROW":                   "Dumbbell Row",
 	"ARNOLD_PRESS":                               "Arnold Press (Dumbbell)",

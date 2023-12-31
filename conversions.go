@@ -68,6 +68,7 @@ var exerciseNameMap = map[string]string{
 	"CABLE_CRUNCH":                               "Cable Crunch",
 	"CABLE_CROSSOVER":                            "Cable Fly Crossovers",
 	"CABLE_OVERHEAD_TRICEPS_EXTENSION":           "Triceps Extension (Cable)",
+	"CABLE_ROW_STANDING":                         "Squat Row",
 	"CALF_RAISE":                                 "Standing Calf Raise (Machine)",
 	"CHEST_SUPPORTED_DUMBBELL_ROW":               "Chest Supported Incline Row (Dumbbell)",
 	"CHIN_UP":                                    "Chin Up (Weighted)",

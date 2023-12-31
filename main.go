@@ -44,6 +44,9 @@ func main() {
 		return
 	}
 
+	// Load the custom exercise names
+	LoadCustomExerciseNames()
+
 	jsonFile, err := os.Open(os.Args[1])
 	if err != nil {
 		fmt.Println("Error opening JSON file:", err)

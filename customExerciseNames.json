@@ -1,0 +1,22 @@
+{
+  "BARBELL_HACK_SQUAT":                       "Hack Squat (Machine)",
+  "BEHIND_THE_BACK_ONE_ARM_CABLE_CURL":       "Single Arm Behind the Back Bicep Curl (Cable)",
+  "CHEST_SUPPORTED_DUMBBELL_ROW":             "Iso-Lateral Row (Machine)",
+  "CABLE_CROSSOVER":                          "Butterfly (Pec Deck)",
+  "DUMBBELL_FLYE":                            "Chest Fly (Machine)",
+  "EZ_BAR_OVERHEAD_TRICEPS_EXTENSION":        "Triceps Extension (EZ Bar)",
+  "FLYE":                                     "Chest Fly (Machine)",
+  "INCLINE_DUMBBELL_SHRUG":                   "Incline Shrug (Dumbbell)",
+  "INCLINE_REVERSE_FLYE":                     "Rear Delt Reverse Fly (Machine)",
+  "INCLINE_Y_RAISE":                          "Lateral Raise (Cable)",
+  "PULL_UP":                                  "Pull Up (Assisted)",
+  "SEATED_EZ_BAR_OVERHEAD_TRICEPS_EXTENSION": "Triceps Extension (EZ Bar)",
+  "SHOULDER_PRESS":                           "Seated Shoulder Press (Machine)",
+  "STANDING_CALF_RAISE":                      "Standing Calf Raise (Barbell)",
+  "SWISS_BALL_HIP_RAISE_AND_LEG_CURL":        "Nordic Hamstring Curls",
+  "TRICEP_EXTENSION":                         "Triceps Extension (Cable)",
+  "TRICEPS_EXTENSION":                        "Triceps Extension (Cable)",
+  "UPRIGHT_ROW":                              "Upright Row (Cable)",
+  "WALKING_LUNGE":                            "Walking Lunge (Dumbbell)",
+  "WEIGHTED_DIP":                             "Chest Dip (Assisted)"
+}

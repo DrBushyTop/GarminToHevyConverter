@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+)
 
 // convertExerciseNameToHevyFormat converts the exercise name to the Hevy format.
 // It prioritizes the user's custom mappings over the default mappings.
@@ -14,8 +19,25 @@ func convertExerciseNameToHevyFormat(exerciseName string) string {
 	return exerciseName
 }
 
+func LoadCustomExerciseNames() {
+	jsonFile, err := os.Open("customExerciseNames.json")
+	if err != nil {
+		fmt.Println("Users' customExerciseNames.json not found. Using default exercise names.")
+		return
+	}
+	defer jsonFile.Close()
+
+	bytes, _ := io.ReadAll(io.Reader(jsonFile))
+	err = json.Unmarshal(bytes, &customExerciseNames)
+	if err != nil {
+		fmt.Println("Error parsing customExerciseNames JSON file:", err)
+		fmt.Println("Using default exercise names")
+		return
+	}
+}
+
 // customExerciseNames maps the Garmin exercise name to a (possibly custom) exercise in Hevy.
-// These are my personal mappings and may not be applicable to you, as I've used the limited Garmin exercise selection
+// These are loaded from customExerciseNames.json. The defaults are my personal mappings and may not be applicable to you, as I've used the limited Garmin exercise selection
 // as placeholders in my own training.
 var customExerciseNames = map[string]string{
 	"BARBELL_HACK_SQUAT":                       "Hack Squat (Machine)",

@@ -5,19 +5,19 @@ import "fmt"
 // convertExerciseNameToHevyFormat converts the exercise name to the Hevy format.
 // It prioritizes the user's custom mappings over the default mappings.
 func convertExerciseNameToHevyFormat(exerciseName string) string {
-	if val, ok := customExerciseNameMap[exerciseName]; ok {
+	if val, ok := customExerciseNames[exerciseName]; ok {
 		return fmt.Sprintf("%s", val)
 	}
-	if val, ok := exerciseNameMap[exerciseName]; ok {
+	if val, ok := exerciseNames[exerciseName]; ok {
 		return fmt.Sprintf("%s", val)
 	}
 	return exerciseName
 }
 
-// customExerciseNameMap maps the Garmin exercise name to a (possibly custom) exercise in Hevy.
+// customExerciseNames maps the Garmin exercise name to a (possibly custom) exercise in Hevy.
 // These are my personal mappings and may not be applicable to you, as I've used the limited Garmin exercise selection
 // as placeholders in my own training.
-var customExerciseNameMap = map[string]string{
+var customExerciseNames = map[string]string{
 	"BARBELL_HACK_SQUAT":                       "Hack Squat (Machine)",
 	"BEHIND_THE_BACK_ONE_ARM_CABLE_CURL":       "Single Arm Behind the Back Bicep Curl (Cable)",
 	"CHEST_SUPPORTED_DUMBBELL_ROW":             "Iso-Lateral Row (Machine)",
@@ -40,11 +40,11 @@ var customExerciseNameMap = map[string]string{
 	"WEIGHTED_DIP":                             "Chest Dip (Assisted)",
 }
 
-// exerciseNameMap maps the Garmin exercise name to the Hevy exercise name.
+// exerciseNames maps the Garmin exercise name to the Hevy exercise name.
 // Note that this map is not complete.
-// exerciseNameMap maps the Garmin exercise name to the Hevy exercise name.
+// exerciseNames maps the Garmin exercise name to the Hevy exercise name.
 // Note that this map is not complete.
-var exerciseNameMap = map[string]string{
+var exerciseNames = map[string]string{
 	"ALTERNATING_DUMBBELL_ROW":                   "Dumbbell Row",
 	"ARNOLD_PRESS":                               "Arnold Press (Dumbbell)",
 	"BARBELL_BACK_SQUAT":                         "Squat (Barbell)",

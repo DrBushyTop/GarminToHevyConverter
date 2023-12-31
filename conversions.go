@@ -1,8 +1,18 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
+
+// convertExerciseNameToHevyFormat converts the exercise name to the Hevy format.
+// It prioritizes the user's custom mappings over the default mappings.
+func convertExerciseNameToHevyFormat(exerciseName string) string {
+	if val, ok := customExerciseNameMap[exerciseName]; ok {
+		return fmt.Sprintf("%s", val)
+	}
+	if val, ok := exerciseNameMap[exerciseName]; ok {
+		return fmt.Sprintf("%s", val)
+	}
+	return exerciseName
+}
 
 // customExerciseNameMap maps the Garmin exercise name to a (possibly custom) exercise in Hevy.
 // These are my personal mappings and may not be applicable to you, as I've used the limited Garmin exercise selection
@@ -17,13 +27,11 @@ var customExerciseNameMap = map[string]string{
 	"INCLINE_DUMBBELL_SHRUG":                   "Incline Shrug (Dumbbell)",
 	"INCLINE_REVERSE_FLYE":                     "Rear Delt Reverse Fly (Machine)",
 	"INCLINE_Y_RAISE":                          "Lateral Raise (Cable)",
-	"LYING_EZ_BAR_TRICEPS_EXTENSION":           "Triceps Extension (EZ Bar)",
 	"PULL_UP":                                  "Pull Up (Assisted)",
 	"SEATED_EZ_BAR_OVERHEAD_TRICEPS_EXTENSION": "Triceps Extension (EZ Bar)",
 	"STANDING_CALF_RAISE":                      "Standing Calf Raise (Barbell)",
 	"SWISS_BALL_HIP_RAISE_AND_LEG_CURL":        "Nordic Hamstring Curls",
 	"TRICEP_EXTENSION":                         "Triceps Extension (Cable)",
-	"TRICEPS_EXTENSION_ON_FLOOR":               "Lying Triceps Extension (Barbell)",
 	"UPRIGHT_ROW":                              "Upright Row (Cable)",
 	"WALKING_LUNGE":                            "Walking Lunge (Dumbbell)",
 	"WEIGHTED_DIP":                             "Chest Dip (Assisted)",
@@ -81,7 +89,7 @@ var exerciseNameMap = map[string]string{
 	"LEG_CURL":                                   "Lying Leg Curl (Machine)",
 	"LEG_EXTENSIONS":                             "Leg Extension (Machine)",
 	"LEG_PRESS":                                  "Leg Press (Machine)",
-	"LYING_EZ_BAR_TRICEPS_EXTENSION":             "Triceps Extension (Barbell)",
+	"LYING_EZ_BAR_TRICEPS_EXTENSION":             "Skullcrusher (Barbell)",
 	"MEDICINE_BALL_ALTERNATING_V_UP":             "V Up",
 	"MILITARY_PRESS":                             "Overhead Press (Barbell)",
 	"MODIFIED_SIT_UP":                            "Sit Up (Weighted)",
@@ -114,6 +122,7 @@ var exerciseNameMap = map[string]string{
 	"STRETCH_WALL_CHEST_AND_SHOULDER":            "Stretching",
 	"SUMO_DEADLIFT":                              "Sumo Deadlift",
 	"TRICEP_EXTENSION":                           "Triceps Extension (Dumbbell)",
+	"TRICEPS_EXTENSION_ON_FLOOR":                 "Skullcrusher (Barbell)",
 	"TRICEPS_PRESSDOWN":                          "Triceps Pushdown",
 	"UPRIGHT_ROW":                                "Upright Row (Barbell)",
 	"WALKING_LUNGE":                              "Walking Lunge",
@@ -132,14 +141,7 @@ var exerciseNameMap = map[string]string{
 	"WIDE_GRIP_SEATED_CABLE_ROW":                 "Seated Cable Row - Bar Wide Grip",
 }
 
-// convertExerciseNameToHevyFormat converts the exercise name to the Hevy format.
-// It prioritizes the user's custom mappings over the default mappings.
-func convertExerciseNameToHevyFormat(exerciseName string) string {
-	if val, ok := customExerciseNameMap[exerciseName]; ok {
-		return fmt.Sprintf("%s", val)
-	}
-	if val, ok := exerciseNameMap[exerciseName]; ok {
-		return fmt.Sprintf("%s", val)
-	}
-	return exerciseName
+// repOnlyExercises is a map of exercises that only have a rep count and no weight in Hevy.
+var repOnlyExercises = map[string]bool{
+	"Nordic Hamstring Curls": true,
 }

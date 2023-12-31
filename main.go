@@ -81,6 +81,7 @@ func processGarminData(data []GarminData) [][]string {
 		setOrder := 0
 
 		for _, set := range activity.FullExerciseSets {
+			// Skip warmup sets, sets with no weight, and sets with no repetitions (avoids custom exercises with no ability to track weight)
 			if set.SetType != "ACTIVE" || set.Category == "WARM_UP" || set.RepetitionCount == 0 || (set.Weight == 0 && set.RepetitionCount == 1) {
 				continue
 			}
@@ -99,7 +100,13 @@ func processGarminData(data []GarminData) [][]string {
 
 			convertedExcerciseName := convertExerciseNameToHevyFormat(exerciseName)
 
+			// Weight should be gotten from the data, but hevy has some rep-only exercises, so we might need to set it to 0 to avoid creating a custom exercise
+			// It's arguable whether this should be generally done, but I'm doing it for my own data
 			weight := formatWeight(set.Weight)
+			if _, ok := repOnlyExercises[convertedExcerciseName]; ok {
+				weight = "0"
+			}
+
 			reps := formatReps(set.RepetitionCount)
 			// Seconds with real values do not seem to import correctly to Hevy
 			//seconds := strconv.Itoa(int(set.Duration))

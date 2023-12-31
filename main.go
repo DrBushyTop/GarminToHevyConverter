@@ -11,8 +11,16 @@ import (
 	"time"
 )
 
+// Exercise represents a single guess by Garmin for the exercise performed
+type Exercise struct {
+	Category    string  `json:"category"`
+	Name        string  `json:"name"`
+	Probability float64 `json:"probability"`
+}
+
 // GarminData represents the relevant fields of the Garmin workout data
 type GarminData struct {
+	ActivityId   int `json:"activityId"`
 	ActivityType struct {
 		TypeKey string `json:"typeKey"`
 	} `json:"activityType"`
@@ -21,21 +29,18 @@ type GarminData struct {
 	Description      string  `json:"description"`
 	Duration         float64 `json:"duration"`
 	FullExerciseSets []struct {
-		Category  string `json:"category"`
-		SetType   string `json:"setType"`
-		Exercises []struct {
-			Name        string  `json:"name"`
-			Probability float64 `json:"probability"`
-		} `json:"exercises"`
-		RepetitionCount int     `json:"repetitionCount"`
-		Duration        float64 `json:"duration"`
-		Weight          int     `json:"weight"`
+		Category        string     `json:"category"`
+		SetType         string     `json:"setType"`
+		Exercises       []Exercise `json:"exercises"`
+		RepetitionCount int        `json:"repetitionCount"`
+		Duration        float64    `json:"duration"`
+		Weight          int        `json:"weight"`
 	} `json:"fullExerciseSets"`
 }
 
 func main() {
 	if len(os.Args) < 2 || len(os.Args) > 3 {
-		fmt.Println("Usage: go run main.go <path-to-json-file>")
+		fmt.Println("Usage: ./GarminToHevy <path-to-json-file>")
 		return
 	}
 
@@ -66,6 +71,8 @@ func processGarminData(data []GarminData) [][]string {
 	// Process the data according to the rules
 	// This function will be lengthy due to the data processing logic
 	var processedData [][]string
+	workoutsWithUnknownExercises := make(map[int]string)
+	workoutsNotFoundInMapping := make(map[string]bool)
 
 	for _, activity := range data {
 		if activity.ActivityType.TypeKey != "strength_training" {
@@ -87,8 +94,8 @@ func processGarminData(data []GarminData) [][]string {
 			}
 
 			exerciseName := getExerciseNameWithHighestProbability(set.Exercises)
-			if exerciseName == "Unknown" {
-				continue
+			if exerciseName == "UNKNOWN" {
+				workoutsWithUnknownExercises[activity.ActivityId] = fmt.Sprintf("https://connect.garmin.com/modern/activity/%d", activity.ActivityId)
 			}
 
 			if exerciseName != lastExerciseName {
@@ -99,6 +106,9 @@ func processGarminData(data []GarminData) [][]string {
 			}
 
 			convertedExcerciseName := convertExerciseNameToHevyFormat(exerciseName)
+			if (strings.Contains(convertedExcerciseName, "_") || convertedExcerciseName == strings.ToUpper(convertedExcerciseName)) && convertedExcerciseName != "UNKNOWN" {
+				workoutsNotFoundInMapping[convertedExcerciseName] = true
+			}
 
 			// Weight should be gotten from the data, but hevy has some rep-only exercises, so we might need to set it to 0 to avoid creating a custom exercise
 			// It's arguable whether this should be generally done, but I'm doing it for my own data
@@ -116,6 +126,22 @@ func processGarminData(data []GarminData) [][]string {
 				date, workoutName, convertedExcerciseName, strconv.Itoa(setOrder), weight, "kg", reps, "", "", "km", seconds, "", workoutNotes, workoutDuration,
 			}
 			processedData = append(processedData, processedRow)
+		}
+	}
+
+	// Print out the workouts with exercises that were not found in the mapping
+	if len(workoutsNotFoundInMapping) > 0 {
+		fmt.Println("Workouts not mapped to Hevy equivalents. These need a PR to the repo to add the mapping, or a custom exercise in Hevy:")
+		for key := range workoutsNotFoundInMapping {
+			fmt.Printf("%s\n", key)
+		}
+	}
+
+	// Print out the workouts with unknown exercises
+	if len(workoutsWithUnknownExercises) > 0 {
+		fmt.Println("Workouts with unknown exercises. You might want to go through these, add the correct exercise and then redownload the Garmin data:")
+		for _, value := range workoutsWithUnknownExercises {
+			fmt.Printf("%s\n", value)
 		}
 	}
 
@@ -180,27 +206,24 @@ func formatWorkoutDuration(duration float64) string {
 }
 
 // getExerciseNameWithHighestProbability selects the exercise name with the highest probability.
-func getExerciseNameWithHighestProbability(exercises []struct {
-	Name        string  `json:"name"`
-	Probability float64 `json:"probability"`
-}) string {
+func getExerciseNameWithHighestProbability(exercises []Exercise) string {
 	if len(exercises) == 0 {
 		return ""
 	}
 
 	maxProb := 0.0
-	var selectedName string
+	var selectedExercise Exercise
 	for _, exercise := range exercises {
 		if exercise.Probability > maxProb {
 			maxProb = exercise.Probability
-			selectedName = exercise.Name
+			selectedExercise = exercise
 		}
 	}
 
-	if selectedName == "" {
-		return "Unknown"
+	if selectedExercise.Name == "" {
+		return selectedExercise.Category
 	}
-	return selectedName
+	return selectedExercise.Name
 }
 
 // formatWeight converts weight from Garmin format to kg and returns it as a string.
